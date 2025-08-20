@@ -16,10 +16,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
+app.UseRouting();
+app.UseCors();  ////Cross Origin Activation- Any platform allows calling the api
+app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
 
-app.Run();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
+
+app.UseCors("AllowOrigin");
