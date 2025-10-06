@@ -1,0 +1,43 @@
+﻿@inject IJSRuntime JS
+
+<div class="modal" tabindex="-1" style="display:@(Visible ? "block" : "none"); background: rgba(0,0,0,0.4)">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@Title</h5>
+                <button type="button" class="btn-close" @onclick="Close"></button>
+            </div>
+            <div class="modal-body">@ChildContent</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" @onclick="Close">Cancel</button>
+                <button class="btn btn-danger" @onclick="Confirm">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string Title { get; set; } = "Confirm";
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public EventCallback<bool> OnClose { get; set; }
+    bool Visible { get; set; }
+
+    public Task ShowAsync()
+    {
+        Visible = true;
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    void Close()
+    {
+        Visible = false;
+        OnClose.InvokeAsync(false);
+    }
+
+    void Confirm()
+    {
+        Visible = false;
+        OnClose.InvokeAsync(true);
+    }
+}
