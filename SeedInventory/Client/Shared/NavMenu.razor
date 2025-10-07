@@ -8,48 +8,164 @@
 </div>
 
 <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
+    @* Existing Sidebar *@
     <nav class="flex-column">
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
+                <span aria-hidden="true"></span>🏠 Home
             </NavLink>
         </div>
+@* 
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="counter">
                 <span class="oi oi-plus" aria-hidden="true"></span> User
             </NavLink>
-        </div>
+        </div> *@
+
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Settings
+                <span aria-hidden="true"></span>⚙️ Settings
             </NavLink>
         </div>
-        <div class="nav-item px-3">
+
+        @* <div class="nav-item px-3">
             <NavLink class="nav-link" href="fetchdata">
                 <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
             </NavLink>
+        </div> *@
+
+        @* 🌱 Seed submenu with toggle *@
+        <div class="nav-item px-3">
+            <a href="#" class="nav-link d-flex justify-content-between align-items-center" @onclick="ToggleSeedMenu">
+                <span><span aria-hidden="true"></span>🌰 Seed Management</span>
+                <span>@(showSeedMenu ? "▲" : "▼")</span>
+            </a>
+
+            @if (showSeedMenu)
+            {
+                <div class="submenu ps-4">
+                    <NavLink class="nav-link" href="seeds">
+                        🌱 Seed Inventory
+                    </NavLink>
+                    <NavLink class="nav-link" href="suppliers">
+                        🚜 Supplier
+                    </NavLink>
+                    <NavLink class="nav-link" href="transactions">
+                        💰 Transactions
+                    </NavLink>
+                    <NavLink class="nav-link" href="pos">
+                        🧾 POS
+                    </NavLink>
+                </div>
+            }
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="seeds">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Seed
+            <a href="#" class="nav-link d-flex justify-content-between align-items-center" @onclick="ToggleSeedMenuMyCrop">
+                <span><span  aria-hidden="true"></span>🌱 Planting</span>
+                <span>@(showSeedMenuMyCrop ? "▲" : "▼")</span>
+            </a>
+
+            @if (showSeedMenuMyCrop)
+            {
+                <div class="submenu ps-4">
+                    <NavLink class="nav-link" href="seeds">
+                        🌿 My Crops
+                    </NavLink>
+                    <NavLink class="nav-link" href="suppliers">
+                        📍 Grow Location
+                    </NavLink>
+                    <NavLink class="nav-link" href="transactions">
+                        🧩 Crop Plan
+                    </NavLink>
+                    <NavLink class="nav-link" href="pos">
+                        🗺️ Location Map
+                    </NavLink>
+                    <NavLink class="nav-link" href="pos">
+                        🌾 Yield Comparison
+                    </NavLink>
+                </div>
+            }
+        </div>
+        <div class="nav-item px-3">
+            <a href="#" class="nav-link d-flex justify-content-between align-items-center" @onclick="ToggleSeedMenuLiveStock">
+                <span><span aria-hidden="true"></span>🐄 live Stock</span>
+                <span>@(showSeedMenuLiveStock ? "▲" : "▼")</span>
+            </a>
+
+            @if (showSeedMenuLiveStock)
+            {
+                <div class="submenu ps-4">
+                    <NavLink class="nav-link" href="seeds">
+                        🐾 Animals
+                    </NavLink>
+                    <NavLink class="nav-link" href="suppliers">
+                        🍃 Grazing
+                    </NavLink>                    
+                </div>
+            }
+        </div>
+        <div class="nav-item px-3">
+            <a href="#" class="nav-link d-flex justify-content-between align-items-center" @onclick="ToggleSeedMenuResources">
+                <span><span aria-hidden="true"></span>🛠️ Resources</span>
+                <span>@(showSeedMenuResources ? "▲" : "▼")</span>
+            </a>
+
+            @if (showSeedMenuResources)
+            {
+                <div class="submenu ps-4">
+                    <NavLink class="nav-link" href="seeds">
+                        🚜 Equipments
+                    </NavLink>
+                    <NavLink class="nav-link" href="suppliers">                        
+                        🏭 Warehouses
+                    </NavLink>
+                    <NavLink class="nav-link" href="suppliers">
+                        📦 Inventory
+                    </NavLink>
+                </div>
+            }
+        </div>
+        <div class="nav-item px-3">
+            <a href="#" class="nav-link d-flex justify-content-between align-items-center" @onclick="ToggleSeedMenuAccounting">
+                <span><span aria-hidden="true"></span>💵 Accounting</span>
+                <span>@(showSeedMenuAccounting ? "▲" : "▼")</span>
+            </a>
+
+            @if (showSeedMenuAccounting)
+            {
+                <div class="submenu ps-4">
+                    <NavLink class="nav-link" href="seeds">
+                        💳 Transaction
+                    </NavLink>
+                    <NavLink class="nav-link" href="suppliers">
+                        🧾 Balance Sheet
+                    </NavLink>
+                    <NavLink class="nav-link" href="suppliers">
+                        📊 Budget
+                    </NavLink>
+                </div>
+            }
+        </div>
+      
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="reports">
+                <span aria-hidden="true"></span>🗺️ Farm Map
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="suppliers">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Supplier
+            <NavLink class="nav-link" href="reports">
+                <span aria-hidden="true"></span>🌦️ Climate
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="Transactions">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Transactions
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="pos">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> POS
+            <NavLink class="nav-link" href="reports">
+                <span class="oi oi-document" aria-hidden="true"></span> Reports
             </NavLink>
         </div>
     </nav>
+
+  
+
 </div>
 
 @code {
@@ -61,4 +177,19 @@
     {
         collapseNavMenu = !collapseNavMenu;
     }
+
+    bool showSeedMenu = false;
+    void ToggleSeedMenu() => showSeedMenu = !showSeedMenu;
+
+    bool showSeedMenuMyCrop = false;
+    void ToggleSeedMenuMyCrop() => showSeedMenuMyCrop = !showSeedMenuMyCrop;
+
+    bool showSeedMenuLiveStock = false;
+    void ToggleSeedMenuLiveStock() => showSeedMenuLiveStock = !showSeedMenuLiveStock;
+
+    bool showSeedMenuResources = false;
+    void ToggleSeedMenuResources() => showSeedMenuResources = !showSeedMenuResources;
+
+    bool showSeedMenuAccounting = false;
+    void ToggleSeedMenuAccounting() => showSeedMenuAccounting = !showSeedMenuAccounting;
 }
