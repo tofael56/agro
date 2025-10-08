@@ -15,13 +15,27 @@
                     <ValidationSummary />
 
                     <div class="row g-2">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label class="form-label">Name</label>
                             <InputText class="form-control" @bind-Value="Model.Name" />
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label class="form-label">Variety</label>
                             <InputText class="form-control" @bind-Value="Model.Variety" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Batch No</label>
+                            <InputText class="form-control" @bind-Value="Model.BatchNo" />
+                        </div>
+                        <div class="col-md-4">
+                            <label>Unit</label>
+                            <InputSelect class="form-select" @bind-Value="Model.UnitId">
+                                <option value="">--None--</option>
+                                @foreach (var un in Units)
+                                {
+                                    <option value="@un.Id">@un.UnitName</option>
+                                }
+                            </InputSelect>
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">Quantity</label>
@@ -32,9 +46,18 @@
                             <InputDate class="form-control" @bind-Value="Model.PurchaseDate" />
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label">Supplier</label>
-                            <InputText class="form-control" @bind-Value="Model.Supplier" />
-
+                            <label class="form-label">Expire Date</label>
+                            <InputDate class="form-control" @bind-Value="Model.ExpiryDate" />
+                        </div>
+                        <div class="col-md-4">
+                            <label>Supplier / Recipient (optional)</label>
+                            <InputSelect class="form-select" @bind-Value="Model.SupplierId">
+                                <option value="">--None--</option>
+                                @foreach (var sp in Suppliers)
+                                {
+                                    <option value="@sp.Id">@sp.Name</option>
+                                }
+                            </InputSelect>
                         </div>
                         <div class="col-12">
                             <label class="form-label">Notes</label>
@@ -54,6 +77,8 @@
 
 @code {
     [Parameter] public EventCallback OnSaved { get; set; }
+    [Parameter] public List<Supplier> Suppliers { get; set; } = new();
+    [Parameter] public List<Unit> Units { get; set; } = new();
     public bool Visible { get; set; }
     public string Title { get; set; } = "Add Seed";
     public Seed Model { get; set; } = new Seed();
@@ -70,7 +95,12 @@
     {
         Visible = false;
     }
+  
 
+    protected override async Task OnInitializedAsync()
+    {
+        Suppliers = await Http.GetFromJsonAsync<List<Supplier>>("api/suppliers");
+    }
     async Task Save()
     {
         if (Model.Id == 0)

@@ -16,14 +16,20 @@ namespace SeedInventory.Shared.Models
 
         [StringLength(200)]
         public string Variety { get; set; } = string.Empty;
+        [StringLength(200)]
+        public string BatchNo { get; set; } = string.Empty;
 
+        public int UnitId { get; set; }
+        public string? UnitName { get; set; }
         [Range(0, int.MaxValue)]
         public int Quantity { get; set; }
 
         public DateTime PurchaseDate { get; set; } = DateTime.UtcNow;
+        public DateTime ExpiryDate { get; set; } = DateTime.UtcNow;
 
-        [StringLength(200)]
-        public string Supplier { get; set; } = string.Empty;
+        // Optional supplier for Receive, or recipient for Issue
+        public int? SupplierId { get; set; }
+        public Supplier? Supplier { get; set; }
 
         [StringLength(1000)]
         public string? Notes { get; set; }

@@ -12,6 +12,11 @@ namespace SeedInventory.Server.Controllers
         private readonly AppDbContext _db;
         public SuppliersController(AppDbContext db) => _db = db;
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Supplier>>> GetSuppliers()
+        {
+            return await _db.Suppliers.ToListAsync();
+        }
         // GET: api/suppliers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Supplier>>> GetAll()
