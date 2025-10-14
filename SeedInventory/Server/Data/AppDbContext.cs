@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SeedInventory.Shared.Models;
+using SeedInventory.Shared.Models.Setting;
 using System.Collections.Generic;
 
 namespace SeedInventory.Server.Data
@@ -10,6 +11,8 @@ namespace SeedInventory.Server.Data
 
         public DbSet<Seed> Seeds => Set<Seed>();
         public DbSet<Supplier> Suppliers => Set<Supplier>();
+        public DbSet<CompanyModel> Company => Set<CompanyModel>();
+        public DbSet<DistributorModel> Distributors => Set<DistributorModel>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

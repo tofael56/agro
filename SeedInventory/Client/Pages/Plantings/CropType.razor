@@ -1,0 +1,106 @@
+﻿<h3>CropType</h3>
+
+@using System.ComponentModel.DataAnnotations
+@using SeedInventory.Shared.Models
+@inject HttpClient Http
+<!-- NewCropType.razor - Blazor Razor component (Bootstrap-based) -->
+<div class="modal show d-block" tabindex="-1" role="dialog" aria-modal="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title">New Crop Type</h5>
+                <button type="button" class="btn-close" aria-label="Close" @onclick="OnCancel"></button>
+            </div>
+
+            <div class="modal-body">
+                <!-- Stepper / Breadcrumb-like steps -->
+                <div class="d-flex align-items-center mb-3">
+                    <div class="me-3 text-center">
+                        <div class="rounded-circle bg-primary text-white" style="width:32px;height:32px;line-height:32px">1</div>
+                        <div class="small">Plant Type &amp; Variety</div>
+                    </div>
+                    <div class="me-3 text-muted">
+                        <div class="rounded-circle border text-muted" style="width:32px;height:32px;line-height:32px">2</div>
+                        <div class="small text-muted">Planting Details</div>
+                    </div>
+                    <div class="text-muted">
+                        <div class="rounded-circle border text-muted" style="width:32px;height:32px;line-height:32px">✓</div>
+                        <div class="small text-muted">Complete</div>
+                    </div>
+                </div>
+
+                <EditForm Model="cropModel" OnValidSubmit="HandleValidSubmit">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+
+                    <div class="mb-3 row align-items-center">
+                        <label class="col-sm-2 col-form-label">Type</label>
+                        <div class="col-sm-6">
+                            <!-- simple searchable select using datalist -->
+                            <input class="form-control" list="types" @bind="cropModel.Type" placeholder="Search for Type" />
+                            <datalist id="types">
+                                @foreach (var t in Types)
+                                {
+                                    <option value="@t">@t</option>
+                                }
+                            </datalist>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row align-items-center">
+                        <label class="col-sm-2 col-form-label">Variety/Strain</label>
+                        <div class="col-sm-6">
+                            <InputText class="form-control" @bind-Value="cropModel.Variety" placeholder="Walla Walla, Bell, Cherry, etc" />
+                        </div>
+                    </div>                    
+
+                </EditForm>
+            </div>
+
+            <div class="modal-footer border-0">
+                <button class="btn btn-link" @onclick="OnCancel">Cancel</button>
+                <button class="btn btn-outline-secondary" @onclick="SaveAndNew">Save &amp; New</button>
+            </div>
+        </div>
+    </div>  
+</div>
+
+@code {
+    private CropsType cropModel = new();
+    public bool Visible { get; set; }
+    public string Title { get; set; } = "Add Seed";
+    public CropsType Model { get; set; } = new CropsType();
+    // Example types - replace with your service call
+    private List<string> Types = new() { "Papaya", "Tomato", "Chili", "Eggplant", "Cauliflower" };
+
+    private void OnCancel()
+    {
+        // close modal logic - in a parent you may control visibility with an event
+        Console.WriteLine("Cancel clicked");
+    }
+
+    private async Task HandleValidSubmit()
+    {
+       
+    }
+
+    private async Task SaveAndNew()
+    {
+       
+        cropModel = new(); // clear form
+        StateHasChanged();
+    }
+
+    public void Open(CropsType type)
+    {
+        Model = type;
+        Title = type.Id == 0 ? "Add Seed" : "Edit Seed";
+        Visible = true;
+        StateHasChanged();
+    }
+
+    
+
+    
+}
+

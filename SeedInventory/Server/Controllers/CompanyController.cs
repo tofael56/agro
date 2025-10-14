@@ -2,58 +2,58 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SeedInventory.Server.Data;
-using SeedInventory.Shared.Models;
+using SeedInventory.Shared.Models.Setting;
 
 namespace SeedInventory.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     [EnableCors("AllowOrigin")]
-    public class SuppliersController : Controller
+    public class CompanyController : Controller
     {
         private readonly AppDbContext _db;
-        public SuppliersController(AppDbContext db) => _db = db;
+        public CompanyController(AppDbContext db) => _db = db;
 
-        
-        // GET: api/suppliers
+
+        // GET: api/company
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Supplier>>> GetAll()
-            => await _db.Suppliers.OrderBy(s => s.Name).ToListAsync();
+        public async Task<ActionResult<IEnumerable<CompanyModel>>> GetAll()
+            => await _db.Company.OrderBy(s => s.Name).ToListAsync();
 
-        // GET: api/suppliers/5
+        // GET: api/company/5
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<Supplier>> Get(int id)
+        public async Task<ActionResult<CompanyModel>> Get(int id)
         {
-            var s = await _db.Suppliers.FindAsync(id);
+            var s = await _db.Company.FindAsync(id);
             if (s == null) return NotFound();
             return s;
         }
 
         // POST
-        [HttpPost]
-        public async Task<ActionResult<Supplier>> Create(Supplier supplier)
+        [HttpPost]  
+        public async Task<ActionResult<CompanyModel>> Create(CompanyModel company)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            _db.Suppliers.Add(supplier);
+            _db.Company.Add(company);
             await _db.SaveChangesAsync();
-            return CreatedAtAction(nameof(Get), new { id = supplier.Id }, supplier);
+            return CreatedAtAction(nameof(Get), new { id = company.Id }, company);
         }
 
         // PUT
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> Update(int id, Supplier supplier)
+        public async Task<IActionResult> Update(int id, CompanyModel company)
         {
-            if (id != supplier.Id) return BadRequest("id mismatch");
+            if (id != company.Id) return BadRequest("id mismatch");
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            _db.Entry(supplier).State = EntityState.Modified;
+            _db.Entry(company).State = EntityState.Modified;
             try
             {
                 await _db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await _db.Suppliers.AnyAsync(e => e.Id == id)) return NotFound();
+                if (!await _db.Company.AnyAsync(e => e.Id == id)) return NotFound();
                 throw;
             }
             return NoContent();
@@ -63,9 +63,9 @@ namespace SeedInventory.Server.Controllers
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var s = await _db.Suppliers.FindAsync(id);
+            var s = await _db.Company.FindAsync(id);
             if (s == null) return NotFound();
-            _db.Suppliers.Remove(s);
+            _db.Company.Remove(s);
             await _db.SaveChangesAsync();
             return NoContent();
         }
